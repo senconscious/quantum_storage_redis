@@ -44,6 +44,9 @@ jobs:
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
 
+    - name: Install dependencies
+      run: mix deps.get
+
     # Cache key based on Erlang/Elixir version and the mix.lock hash
     - name: Restore PLT cache
       id: plt_cache
@@ -72,9 +75,6 @@ jobs:
           plt-${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
         path: |
           priv/plts
-
-    - name: Install dependencies
-      run: mix deps.get
 
     - name: Run checks
       run: mix check
