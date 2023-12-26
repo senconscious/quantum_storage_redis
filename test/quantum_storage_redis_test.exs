@@ -8,11 +8,22 @@ defmodule QuantumStorageRedisTest do
     use Quantum, otp_app: :quantum_storage_redis
   end
 
-  setup %{line: line} do
+  setup_all do
+    host = System.get_env("REDIS_HOST", "localhost")
+
+    port =
+      "REDIS_PORT"
+      |> System.get_env("6379")
+      |> String.to_integer()
+
+    [redis_host: host, redis_port: port]
+  end
+
+  setup %{line: line, redis_host: host, redis_port: port} do
     storage =
       start_supervised!(
         {QuantumStorageRedis,
-         name: Module.concat(__MODULE__, "#{line}"), host: "localhost", port: 6379, database: 1}
+         name: Module.concat(__MODULE__, "#{line}"), host: host, port: port, database: 1}
       )
 
     assert :ok = QuantumStorageRedis.purge(storage)
