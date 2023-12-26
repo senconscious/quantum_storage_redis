@@ -1,21 +1,40 @@
-# QuantumStorageRedis
+# Quantum Storage Redis
 
-**TODO: Add description**
+Quantum storage adapter for redis. This is basically a copy of [persistent ets implementation](https://github.com/quantum-elixir/quantum-storage-persistent-ets)
+
+Uses [Redix](https://github.com/whatyouhide/redix) under the hood to communicate with redis.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `quantum_storage_redis` to your list of dependencies in `mix.exs`:
+1. The package can be installed by adding `quantum_storage_redis` to your list
+of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:quantum_storage_redis, "~> 0.1.0"}
+    {:quantum_storage_redis, "~> 0.0.1"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/quantum_storage_redis>.
+2. Start Adapter under supervision tree:
 
+```elixir
+children = [
+  ...
+  # Here you need provide options for Redix adapter. Note that 
+  # redix itself will be started under name postfixed with `Redix`
+  # For more options please see redix docs
+  {QuantumStorageRedis, name: :quantum_storage, host: "localhost", port: 6379}
+  ...
+]
+```
+
+3. Enable storage adapter for your scheduler, add this to your `config.exs`:
+
+```elixir
+import Config
+
+config :acme, Acme.Scheduler,
+  storage: QuantumStorageRedis
+```

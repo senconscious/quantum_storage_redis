@@ -24,3 +24,7 @@ quantum_storage_redis-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+dump.rdb
+.elixir_ls
+.tool-versions
