@@ -2,11 +2,12 @@ defmodule QuantumStorageRedis.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/senconscious/quantum_storage_redis"
+  @version "0.0.1"
 
   def project do
     [
       app: :quantum_storage_redis,
-      version: "0.0.1",
+      version: @version,
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -20,6 +21,7 @@ defmodule QuantumStorageRedis.MixProject do
         plt_file: {:no_warn, "priv/plts/project.plt"}
       ],
       name: "Quantum Storage Redis",
+      docs: docs(),
       source_url: @source_url
     ]
   end
@@ -37,7 +39,8 @@ defmodule QuantumStorageRedis.MixProject do
       {:redix, "~> 1.1"},
       {:castore, ">= 0.0.0"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 
@@ -58,6 +61,18 @@ defmodule QuantumStorageRedis.MixProject do
                 CHANGELOG*),
       licenses: ["MIT"],
       links: %{"GitHub" => @source_url}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      source_ref: "v#{@version}",
+      source_url: @source_url,
+      extras: [
+        "CHANGELOG.md",
+        "README.md"
+      ]
     ]
   end
 end
