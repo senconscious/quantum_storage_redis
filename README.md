@@ -12,7 +12,7 @@ Uses [Redix](https://github.com/whatyouhide/redix) under the hood to communicate
 ```elixir
 def deps do
   [
-    {:quantum_storage_redis, git: "https://github.com/senconscious/quantum_storage_redis", branch: "main"},
+    {:quantum_storage_redis, "~> 0.0.1"}
   ]
 end
 ```
