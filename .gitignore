@@ -27,4 +27,3 @@ quantum_storage_redis-*.tar
 
 dump.rdb
 .elixir_ls
-.tool-versions
