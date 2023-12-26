@@ -11,6 +11,9 @@ defmodule QuantumStorageRedis.MixProject do
       aliases: aliases(),
       preferred_cli_env: [
         check: :test
+      ],
+      dialyzer: [
+        plt_file: {:no_warn, "priv/plts/project.plt"}
       ]
     ]
   end
@@ -34,7 +37,7 @@ defmodule QuantumStorageRedis.MixProject do
 
   defp aliases do
     [
-      check: ["format --check-formatted", "credo --strict", "dialyzer", "test"]
+      check: ["format --check-formatted", "credo --strict", "dialyzer --format github", "test"]
     ]
   end
 end

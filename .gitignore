@@ -26,4 +26,10 @@ quantum_storage_redis-*.tar
 /tmp/
 
 dump.rdb
+
+# ElixirLS
 .elixir_ls
+
+# Dialyzer
+/priv/plts/*.plt
+/priv/plts/*.plt.hash
