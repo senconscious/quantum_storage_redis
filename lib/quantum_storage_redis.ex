@@ -12,6 +12,26 @@ defmodule QuantumStorageRedis do
 
   @behaviour Quantum.Storage
 
+  @supported_redix_options [
+    :host,
+    :port,
+    :database,
+    :username,
+    :password,
+    :timeout,
+    :sync_connect,
+    :exit_on_disconnection,
+    :backoff_initial,
+    :backoff_max,
+    :ssl,
+    :name,
+    :socket_opts,
+    :hibernate_after,
+    :spawn_opt,
+    :debug,
+    :sentinel
+  ]
+
   @doc false
   def start_link(opts),
     do: GenServer.start_link(__MODULE__, opts, opts)
@@ -19,7 +39,10 @@ defmodule QuantumStorageRedis do
   @doc false
   @impl GenServer
   def init(opts) do
-    opts = Keyword.update!(opts, :name, &Module.concat(&1, Redix))
+    opts =
+      opts
+      |> Keyword.update!(:name, &Module.concat(&1, Redix))
+      |> Keyword.take(@supported_redix_options)
 
     {:ok, conn} = Redix.start_link(opts)
 
