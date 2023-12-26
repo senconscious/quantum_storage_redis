@@ -7,34 +7,25 @@ Uses [Redix](https://github.com/whatyouhide/redix) under the hood to communicate
 ## Installation
 
 1. The package can be installed by adding `quantum_storage_redis` to your list
-of dependencies in `mix.exs`:
+   of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:quantum_storage_redis, "~> 0.0.1"}
+    {:quantum_storage_redis, git: "https://github.com/senconscious/quantum_storage_redis", branch: "main"},
   ]
 end
 ```
 
-2. Start Adapter under supervision tree:
-
-```elixir
-children = [
-  ...
-  # Here you need provide options for Redix adapter. Note that 
-  # redix itself will be started under name postfixed with `Redix`
-  # For more options please see redix docs
-  {QuantumStorageRedis, name: :quantum_storage, host: "localhost", port: 6379}
-  ...
-]
-```
-
-3. Enable storage adapter for your scheduler, add this to your `config.exs`:
+2. Enable storage adapter for your scheduler, add this to your `config.exs`:
 
 ```elixir
 import Config
 
 config :acme, Acme.Scheduler,
-  storage: QuantumStorageRedis
+  storage: QuantumStorageRedis,
+  # Here you need provide options for Redix adapter. Note that
+  # redix itself will be started under name postfixed with `Redix`
+  # For more options please see redix docs
+  storage_opts: [name: QuantumStorage, host: "localhost", port: 6379]
 ```
